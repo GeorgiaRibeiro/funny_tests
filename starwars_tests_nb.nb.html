@@ -219,69 +219,110 @@ pre code {
 <p>Tenta executar esse código clicando em <em>Run</em>, botão na direta superior ou colocando o mouse dentro do retângulo + <em>Ctrl+Shift+Enter</em>.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShkcGx5ciwgZ2dwbG90MilcbmxpYnJhcnkocGxvdGx5KVxuXG5kZiA8LSBzdGFyd2Fyc1xuYGBgIn0= -->
-<pre class="r"><code>library(dplyr, ggplot2)
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxubGlicmFyeShkcGx5ciwgZ2dwbG90MilcbmxpYnJhcnkocGxvdGx5KVxuXG5kZiA8LSBzdGFyd2Fyc1xuYGBgXG5gYGAifQ== -->
+<pre class="r"><code>```r
+library(dplyr, ggplot2)
 library(plotly)
 
 df &lt;- starwars</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>Nota para mim mesma: adicione um novo retângulo (chunk) com <em>Ctrl+Alt+I</em>.</p>
-<p>Começo com um gráfico scatterplot, idade X massa. O marco da idade é a batalha de Yavin (AQUELA da morte da estrela da morte).</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ19hZ2VfbWFzcyA8LSBnZ3Bsb3QoZGYsIGFlcyh4PWJpcnRoX3llYXIsIHk9bWFzcywgbGFiZWw9bmFtZSkpICtcbiAgZ2VvbV9wb2ludChzaXplPTAuNSkgK1xuICNnZW9tX3RleHQoYWVzKGxhYmVsPWlmZWxzZShiaXJ0aF95ZWFyPj0yMDAsYXMuY2hhcmFjdGVyKG5hbWUpLCcnKSksaGp1c3Q9LTAuMDUsdmp1c3Q9LTAuNSkgK1xuICB4bGltICgwLDEwMDApICsgeWxpbSAoMCwxNTAwKSArXG4gIHRoZW1lX21pbmltYWwoKVxuXG5wX2FnZV9tYXNzIDwtIGdncGxvdGx5KGdfYWdlX21hc3MpXG5gYGAifQ== -->
-<pre class="r"><code>g_age_mass &lt;- ggplot(df, aes(x=birth_year, y=mass, label=name)) +
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+Nota para mim mesma: adicione um novo retângulo (chunk) com *Ctrl+Alt+I*.
+
+Começo com um gráfico scatterplot, idade X massa. O marco da idade é a batalha de Yavin (AQUELA da morte da estrela da morte).
+
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuZ19hZ2VfbWFzcyA8LSBnZ3Bsb3QoZGYsIGFlcyh4PWJpcnRoX3llYXIsIHk9bWFzcywgbGFiZWw9bmFtZSkpICtcbiAgZ2VvbV9wb2ludChzaXplPTAuNSkgK1xuICNnZW9tX3RleHQoYWVzKGxhYmVsPWlmZWxzZShiaXJ0aF95ZWFyPj0yMDAsYXMuY2hhcmFjdGVyKG5hbWUpLCcnKSksaGp1c3Q9LTAuMDUsdmp1c3Q9LTAuNSkgK1xuICB4bGltICgwLDEwMDApICsgeWxpbSAoMCwxNTAwKSArXG4gIHRoZW1lX21pbmltYWwoKVxuXG5wX2FnZV9tYXNzIDwtIGdncGxvdGx5KGdfYWdlX21hc3MpXG5gYGBcbmBgYCJ9 --&gt;
+
+```r
+```r
+g_age_mass &lt;- ggplot(df, aes(x=birth_year, y=mass, label=name)) +
   geom_point(size=0.5) +
  #geom_text(aes(label=ifelse(birth_year&gt;=200,as.character(name),&#39;&#39;)),hjust=-0.05,vjust=-0.5) +
   xlim (0,1000) + ylim (0,1500) +
   theme_minimal()
 
 p_age_mass &lt;- ggplotly(g_age_mass)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>Vamos ver quantos personagens participaram de cada filme. Vendo o banco abaixo, a variável filme está agrupada em listas, então 1º desfaço as listas, 2º transformo cada filme em uma variável(coluna), 3º junto tudo em uma variável, e por último, 4º crio um novo banco com o resultado e excluindo os casos faltantes (NA).</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGYyIDwtIGRmXG5cbmRmMiA8LSBkZjIgJT4lXG4gIG11dGF0ZShmaWxtcyA9IG1hcChmaWxtcywgdG9TdHJpbmcpKSAlPiUgI3VubGlzdCB2YXJpYWJsZVxuICBzZXBhcmF0ZShmaWxtcywgc2VwID0gXCIsXCIsXG4gICAgICAgICAgIGludG8gPSBjKFwiZmlsbVwiLCBcImZpbG0xXCIsIFwiZmlsbTJcIiwgXCJmaWxtM1wiLCBcImZpbG00XCIsIFwiZmlsbTVcIiwgXCJmaWxtNlwiKSxcbiAgICAgICAgICAgY29udmVydCA9IFRSVUUpICNzZXBhcmF0ZSBsaXN0cyBpbnRvIGNvbHVtbnNcblxuZGYyIDwtIGdhdGhlcihkZjIsXCJjb2x1bW5zXCIsXCJmaWxtc1wiLCAxMjoxOClcbmRmMiRjb2x1bW5zIDwtIE5VTExcblxuY2hhcl9maWxtcyA8LSBkZjIgJT4lIGdyb3VwX2J5KGZpbG1zLCBuYW1lKSAlPiUgIHN1bW1hcmlzZShuID0gbigpKSAlPiUgc3VtbWFyaXNlKG4gPSBzdW0obikpXG5jaGFyX2ZpbG1zIDwtIGNoYXJfZmlsbXNbLTE0LF1cbmBgYCJ9 -->
-<pre class="r"><code>df2 &lt;- df
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+Vamos ver quantos personagens participaram de cada filme. Vendo o banco abaixo, a variável filme está agrupada em listas, então 1º desfaço as listas, 2º transformo cada filme em uma variável(coluna), 3º junto tudo em uma variável, e por último, 4º crio um novo banco com o resultado e excluindo os casos faltantes (NA).
+
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuZGYyIDwtIGRmXG5cbmRmMiA8LSBkZjIgJT4lXG4gIG11dGF0ZShmaWxtcyA9IG1hcChmaWxtcywgdG9TdHJpbmcpKSAlPiUgI3VubGlzdCB2YXJpYWJsZVxuICBzZXBhcmF0ZShmaWxtcywgc2VwID0gXFxcbmBgYCJ9 --&gt;
+
+```r
+```r
+df2 &lt;- df
 
 df2 &lt;- df2 %&gt;%
   mutate(films = map(films, toString)) %&gt;% #unlist variable
-  separate(films, sep = &quot;,&quot;,
-           into = c(&quot;film&quot;, &quot;film1&quot;, &quot;film2&quot;, &quot;film3&quot;, &quot;film4&quot;, &quot;film5&quot;, &quot;film6&quot;),
-           convert = TRUE) #separate lists into columns
-
-df2 &lt;- gather(df2,&quot;columns&quot;,&quot;films&quot;, 12:18)
-df2$columns &lt;- NULL
-
-char_films &lt;- df2 %&gt;% group_by(films, name) %&gt;%  summarise(n = n()) %&gt;% summarise(n = sum(n))
-char_films &lt;- char_films[-14,]</code></pre>
+  separate(films, sep = \</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Agora sim, ao gráfico:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY2hhcl9maWxtcyA8LSBkZjIgJT4lIGdyb3VwX2J5KGZpbG1zLCBuYW1lKSAlPiUgIHN1bW1hcmlzZShuID0gbigpKSAlPiUgc3VtbWFyaXNlKG4gPSBzdW0obikpXG5jaGFyX2ZpbG1zIDwtIGNoYXJfZmlsbXNbLTE0LF1cblxuZ2dwbG90KGNoYXJfZmlsbXMsIGFlcyhyZW9yZGVyKGZpbG1zLCBuKSwgbikpICtcbiAgZ2VvbV9iYXIoc3RhdD0naWRlbnRpdHknLCBmaWxsPVwiIzVGODE1RVwiKSArIGNvb3JkX2ZsaXAoKSArXG4gIHhsYWIoJ0ZpbG1lcycpICsgeWxhYignTsO6bWVybyBkZSBwZXJzb25hZ2VucycpICtcbiAgdGhlbWVfbWluaW1hbCgpXG5gYGAifQ== -->
-<pre class="r"><code>char_films &lt;- df2 %&gt;% group_by(films, name) %&gt;%  summarise(n = n()) %&gt;% summarise(n = sum(n))
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuY2hhcl9maWxtcyA8LSBkZjIgJT4lIGdyb3VwX2J5KGZpbG1zLCBuYW1lKSAlPiUgIHN1bW1hcmlzZShuID0gbigpKSAlPiUgc3VtbWFyaXNlKG4gPSBzdW0obikpXG5jaGFyX2ZpbG1zIDwtIGNoYXJfZmlsbXNbLTE0LF1cblxuZ2dwbG90KGNoYXJfZmlsbXMsIGFlcyhyZW9yZGVyKGZpbG1zLCBuKSwgbikpICtcbiAgZ2VvbV9iYXIoc3RhdD0naWRlbnRpdHknLCBmaWxsPVxcIzVGODE1RVxcKSArIGNvb3JkX2ZsaXAoKSArXG4gIHhsYWIoJ0ZpbG1lcycpICsgeWxhYignTsODwrptZXJvIGRlIHBlcnNvbmFnZW5zJykgK1xuICB0aGVtZV9taW5pbWFsKClcbmBgYFxuYGBgIn0= -->
+<pre class="r"><code>```r
+char_films &lt;- df2 %&gt;% group_by(films, name) %&gt;%  summarise(n = n()) %&gt;% summarise(n = sum(n))
 char_films &lt;- char_films[-14,]
 
 ggplot(char_films, aes(reorder(films, n), n)) +
-  geom_bar(stat=&#39;identity&#39;, fill=&quot;#5F815E&quot;) + coord_flip() +
-  xlab(&#39;Filmes&#39;) + ylab(&#39;Número de personagens&#39;) +
+  geom_bar(stat=&#39;identity&#39;, fill=\#5F815E\) + coord_flip() +
+  xlab(&#39;Filmes&#39;) + ylab(&#39;NÃºmero de personagens&#39;) +
   theme_minimal()</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>Queria fazer algo tipo uma rede, pra cada personagem os filmes que eles participaram… “Awesome it is”, diria o Yoda. Fica pra o proximo capítulo…</p>
-<p>Ah, pra terminar fiz uma Analise de Componentes Principais, só pra testar, porque só tem três variaveis numéricas nesse banco e o PCA funciona com muitas variáveis numericas para identificar o formato dos dados, as semelhanças e diferenças entre as amostras e reduzir as variáveis em “componentes principais”. Quando tiver um banco melhor, vou entender mais… ficou assim:</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGYkaGVpZ2h0W2lzLm5hKGRmJGhlaWdodCldIDwtIDBcbmRmJG1hc3NbaXMubmEoZGYkbWFzcyldIDwtIDBcbmRmJGJpcnRoX3llYXJbaXMubmEoZGYkYmlydGhfeWVhcildIDwtIDBcblxuc3RhcndhcnMucGNhIDwtIHByY29tcChkZlssYygyOjMsNyldLCBjZW50ZXIgPSBUUlVFLHNjYWxlLiA9IFRSVUUpXG5zdW1tYXJ5KHN0YXJ3YXJzLnBjYSlcbnBjYSA8LSBhdXRvcGxvdChzdGFyd2Fycy5wY2EsIGRhdGEgPSBkZiwgY29sb3VyID0gJ2dlbmRlcicsXG4gICAgICAgICBsb2FkaW5ncyA9IFRSVUUsIGxvYWRpbmdzLmNvbG91ciA9ICdibGFjaycsXG4gICAgICAgICBsb2FkaW5ncy5sYWJlbCA9IFRSVUUsIGxvYWRpbmdzLmxhYmVsLnNpemUgPSA0KVxuYGBgIn0= -->
-<pre class="r"><code>df$height[is.na(df$height)] &lt;- 0
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+Queria fazer algo tipo uma rede, pra cada personagem os filmes que eles participaram... &quot;Awesome it is&quot;, diria o Yoda. Fica pra o proximo capítulo...
+
+Ah, pra terminar fiz uma Analise de Componentes Principais, só pra testar, porque só tem três variaveis numéricas nesse banco e o PCA funciona com muitas variáveis numericas para identificar o formato dos dados, as semelhanças e diferenças entre as amostras e reduzir as variáveis em &quot;componentes principais&quot;. Quando tiver um banco melhor, vou entender mais... ficou assim:
+
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuZGYkaGVpZ2h0W2lzLm5hKGRmJGhlaWdodCldIDwtIDBcbmRmJG1hc3NbaXMubmEoZGYkbWFzcyldIDwtIDBcbmRmJGJpcnRoX3llYXJbaXMubmEoZGYkYmlydGhfeWVhcildIDwtIDBcblxuc3RhcndhcnMucGNhIDwtIHByY29tcChkZlssYygyOjMsNyldLCBjZW50ZXIgPSBUUlVFLHNjYWxlLiA9IFRSVUUpXG5zdW1tYXJ5KHN0YXJ3YXJzLnBjYSlcbnBjYSA8LSBhdXRvcGxvdChzdGFyd2Fycy5wY2EsIGRhdGEgPSBkZiwgY29sb3VyID0gJ2dlbmRlcicsXG4gICAgICAgICBsb2FkaW5ncyA9IFRSVUUsIGxvYWRpbmdzLmNvbG91ciA9ICdibGFjaycsXG4gICAgICAgICBsb2FkaW5ncy5sYWJlbCA9IFRSVUUsIGxvYWRpbmdzLmxhYmVsLnNpemUgPSA0KVxuYGBgXG5gYGAifQ== --&gt;
+
+```r
+```r
+df$height[is.na(df$height)] &lt;- 0
 df$mass[is.na(df$mass)] &lt;- 0
 df$birth_year[is.na(df$birth_year)] &lt;- 0
 
@@ -290,15 +331,20 @@ summary(starwars.pca)
 pca &lt;- autoplot(starwars.pca, data = df, colour = &#39;gender&#39;,
          loadings = TRUE, loadings.colour = &#39;black&#39;,
          loadings.label = TRUE, loadings.label.size = 4)</code></pre>
+<p>```</p>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p><sub>Referências</sub></p>
-<p>Tutorial PCA (<a href="https://www.datacamp.com/community/tutorials/pca-analysis-r" class="uri">https://www.datacamp.com/community/tutorials/pca-analysis-r</a>) Muito google e Stackoverflow :)</p>
+<ul>
+<li>Tutorial PCA (<a href="https://www.datacamp.com/community/tutorials/pca-analysis-r" class="uri">https://www.datacamp.com/community/tutorials/pca-analysis-r</a>)</li>
+<li>Muito google e Stackoverflow :)</li>
+<li>Conectando Git e RStudio (<a href="https://beatrizmilz.github.io/RLadies-Git-RStudio-2019/#38" class="uri">https://beatrizmilz.github.io/RLadies-Git-RStudio-2019/#38</a>)</li>
+</ul>
 <p><em>adios</em>. by: geoRgia</p>
 <!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkV4cGxvcmF0b3J5IERhdGEgdy8gU3RhcndhcnMiDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpFc3NlIMOpIHVtIE5vdGVib29rIFtSIE1hcmtkb3duXShodHRwOi8vcm1hcmtkb3duLnJzdHVkaW8uY29tKS4gUXVhbmRvIHZvY8OqIGV4ZWN1dGEgYXMgbGluaGFzIGRlIGPDs2RpZ28gb3MgcmVzdWx0YWRvcyBhcGFyZWNlbSBlbWJhaXhvLg0KDQpUZW50YSBleGVjdXRhciBlc3NlIGPDs2RpZ28gY2xpY2FuZG8gZW0gKlJ1biosIGJvdMOjbyBuYSBkaXJldGEgc3VwZXJpb3Igb3UgY29sb2NhbmRvIG8gbW91c2UgZGVudHJvIGRvIHJldMOibmd1bG8gKyAqQ3RybCtTaGlmdCtFbnRlciouIA0KDQpgYGB7cn0NCmxpYnJhcnkoZHBseXIsIGdncGxvdDIpDQpsaWJyYXJ5KHBsb3RseSkNCg0KZGYgPC0gc3RhcndhcnMNCmBgYA0KDQpOb3RhIHBhcmEgbWltIG1lc21hOiBhZGljaW9uZSB1bSBub3ZvIHJldMOibmd1bG8gKGNodW5rKSBjb20gKkN0cmwrQWx0K0kqLg0KDQpDb21lw6dvIGNvbSB1bSBncsOhZmljbyBzY2F0dGVycGxvdCwgaWRhZGUgWCBtYXNzYS4gTyBtYXJjbyBkYSBpZGFkZSDDqSBhIGJhdGFsaGEgZGUgWWF2aW4gKEFRVUVMQSBkYSBtb3J0ZSBkYSBlc3RyZWxhIGRhIG1vcnRlKS4NCg0KYGBge3J9DQpnX2FnZV9tYXNzIDwtIGdncGxvdChkZiwgYWVzKHg9YmlydGhfeWVhciwgeT1tYXNzLCBsYWJlbD1uYW1lKSkgKw0KICBnZW9tX3BvaW50KHNpemU9MC41KSArDQogI2dlb21fdGV4dChhZXMobGFiZWw9aWZlbHNlKGJpcnRoX3llYXI+PTIwMCxhcy5jaGFyYWN0ZXIobmFtZSksJycpKSxoanVzdD0tMC4wNSx2anVzdD0tMC41KSArDQogIHhsaW0gKDAsMTAwMCkgKyB5bGltICgwLDE1MDApICsNCiAgdGhlbWVfbWluaW1hbCgpDQoNCnBfYWdlX21hc3MgPC0gZ2dwbG90bHkoZ19hZ2VfbWFzcykNCmBgYA0KDQpWYW1vcyB2ZXIgcXVhbnRvcyBwZXJzb25hZ2VucyBwYXJ0aWNpcGFyYW0gZGUgY2FkYSBmaWxtZS4gVmVuZG8gbyBiYW5jbyBhYmFpeG8sIGEgdmFyacOhdmVsIGZpbG1lIGVzdMOhIGFncnVwYWRhIGVtIGxpc3RhcywgZW50w6NvIDHCuiBkZXNmYcOnbyBhcyBsaXN0YXMsIDLCuiB0cmFuc2Zvcm1vIGNhZGEgZmlsbWUgZW0gdW1hIHZhcmnDoXZlbChjb2x1bmEpLCAzwroganVudG8gdHVkbyBlbSB1bWEgdmFyacOhdmVsLCBlIHBvciDDumx0aW1vLCA0wrogY3JpbyB1bSBub3ZvIGJhbmNvIGNvbSBvIHJlc3VsdGFkbyBlIGV4Y2x1aW5kbyBvcyBjYXNvcyBmYWx0YW50ZXMgKE5BKS4NCg0KYGBge3J9DQpkZjIgPC0gZGYNCg0KZGYyIDwtIGRmMiAlPiUNCiAgbXV0YXRlKGZpbG1zID0gbWFwKGZpbG1zLCB0b1N0cmluZykpICU+JSAjdW5saXN0IHZhcmlhYmxlDQogIHNlcGFyYXRlKGZpbG1zLCBzZXAgPSAiLCIsDQogICAgICAgICAgIGludG8gPSBjKCJmaWxtIiwgImZpbG0xIiwgImZpbG0yIiwgImZpbG0zIiwgImZpbG00IiwgImZpbG01IiwgImZpbG02IiksDQogICAgICAgICAgIGNvbnZlcnQgPSBUUlVFKSAjc2VwYXJhdGUgbGlzdHMgaW50byBjb2x1bW5zDQoNCmRmMiA8LSBnYXRoZXIoZGYyLCJjb2x1bW5zIiwiZmlsbXMiLCAxMjoxOCkNCmRmMiRjb2x1bW5zIDwtIE5VTEwNCg0KY2hhcl9maWxtcyA8LSBkZjIgJT4lIGdyb3VwX2J5KGZpbG1zLCBuYW1lKSAlPiUgIHN1bW1hcmlzZShuID0gbigpKSAlPiUgc3VtbWFyaXNlKG4gPSBzdW0obikpDQpjaGFyX2ZpbG1zIDwtIGNoYXJfZmlsbXNbLTE0LF0NCmBgYA0KDQpBZ29yYSBzaW0sIGFvIGdyw6FmaWNvOg0KDQpgYGB7cn0NCmNoYXJfZmlsbXMgPC0gZGYyICU+JSBncm91cF9ieShmaWxtcywgbmFtZSkgJT4lICBzdW1tYXJpc2UobiA9IG4oKSkgJT4lIHN1bW1hcmlzZShuID0gc3VtKG4pKQ0KY2hhcl9maWxtcyA8LSBjaGFyX2ZpbG1zWy0xNCxdDQoNCmdncGxvdChjaGFyX2ZpbG1zLCBhZXMocmVvcmRlcihmaWxtcywgbiksIG4pKSArDQogIGdlb21fYmFyKHN0YXQ9J2lkZW50aXR5JywgZmlsbD0iIzVGODE1RSIpICsgY29vcmRfZmxpcCgpICsNCiAgeGxhYignRmlsbWVzJykgKyB5bGFiKCdOw7ptZXJvIGRlIHBlcnNvbmFnZW5zJykgKw0KICB0aGVtZV9taW5pbWFsKCkNCmBgYA0KDQpRdWVyaWEgZmF6ZXIgYWxnbyB0aXBvIHVtYSByZWRlLCBwcmEgY2FkYSBwZXJzb25hZ2VtIG9zIGZpbG1lcyBxdWUgZWxlcyBwYXJ0aWNpcGFyYW0uLi4gIkF3ZXNvbWUgaXQgaXMiLCBkaXJpYSBvIFlvZGEuIEZpY2EgcHJhIG8gcHJveGltbyBjYXDDrXR1bG8uLi4NCg0KQWgsIHByYSB0ZXJtaW5hciBmaXogdW1hIEFuYWxpc2UgZGUgQ29tcG9uZW50ZXMgUHJpbmNpcGFpcywgc8OzIHByYSB0ZXN0YXIsIHBvcnF1ZSBzw7MgdGVtIHRyw6pzIHZhcmlhdmVpcyBudW3DqXJpY2FzIG5lc3NlIGJhbmNvIGUgbyBQQ0EgZnVuY2lvbmEgY29tIG11aXRhcyB2YXJpw6F2ZWlzIG51bWVyaWNhcyBwYXJhIGlkZW50aWZpY2FyIG8gZm9ybWF0byBkb3MgZGFkb3MsIGFzIHNlbWVsaGFuw6dhcyBlIGRpZmVyZW7Dp2FzIGVudHJlIGFzIGFtb3N0cmFzIGUgcmVkdXppciBhcyB2YXJpw6F2ZWlzIGVtICJjb21wb25lbnRlcyBwcmluY2lwYWlzIi4gUXVhbmRvIHRpdmVyIHVtIGJhbmNvIG1lbGhvciwgdm91IGVudGVuZGVyIG1haXMuLi4gZmljb3UgYXNzaW06DQoNCmBgYHtyfQ0KZGYkaGVpZ2h0W2lzLm5hKGRmJGhlaWdodCldIDwtIDANCmRmJG1hc3NbaXMubmEoZGYkbWFzcyldIDwtIDANCmRmJGJpcnRoX3llYXJbaXMubmEoZGYkYmlydGhfeWVhcildIDwtIDANCg0Kc3RhcndhcnMucGNhIDwtIHByY29tcChkZlssYygyOjMsNyldLCBjZW50ZXIgPSBUUlVFLHNjYWxlLiA9IFRSVUUpDQpzdW1tYXJ5KHN0YXJ3YXJzLnBjYSkNCnBjYSA8LSBhdXRvcGxvdChzdGFyd2Fycy5wY2EsIGRhdGEgPSBkZiwgY29sb3VyID0gJ2dlbmRlcicsDQogICAgICAgICBsb2FkaW5ncyA9IFRSVUUsIGxvYWRpbmdzLmNvbG91ciA9ICdibGFjaycsDQogICAgICAgICBsb2FkaW5ncy5sYWJlbCA9IFRSVUUsIGxvYWRpbmdzLmxhYmVsLnNpemUgPSA0KQ0KYGBgDQoNCn5SZWZlcsOqbmNpYXN+DQoNClR1dG9yaWFsIFBDQSAoaHR0cHM6Ly93d3cuZGF0YWNhbXAuY29tL2NvbW11bml0eS90dXRvcmlhbHMvcGNhLWFuYWx5c2lzLXIpDQpNdWl0byBnb29nbGUgZSBTdGFja292ZXJmbG93IDopDQoNCiphZGlvcyouIGJ5OiBnZW9SZ2lh</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkV4cGxvcmF0b3J5IERhdGEgdy8gU3RhcndhcnMiDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpFc3NlIMOpIHVtIE5vdGVib29rIFtSIE1hcmtkb3duXShodHRwOi8vcm1hcmtkb3duLnJzdHVkaW8uY29tKS4gUXVhbmRvIHZvY8OqIGV4ZWN1dGEgYXMgbGluaGFzIGRlIGPDs2RpZ28gb3MgcmVzdWx0YWRvcyBhcGFyZWNlbSBlbWJhaXhvLg0KDQpUZW50YSBleGVjdXRhciBlc3NlIGPDs2RpZ28gY2xpY2FuZG8gZW0gKlJ1biosIGJvdMOjbyBuYSBkaXJldGEgc3VwZXJpb3Igb3UgY29sb2NhbmRvIG8gbW91c2UgZGVudHJvIGRvIHJldMOibmd1bG8gKyAqQ3RybCtTaGlmdCtFbnRlciouIA0KDQpgYGB7cn0NCmxpYnJhcnkoZHBseXIsIGdncGxvdDIpDQpsaWJyYXJ5KHBsb3RseSkNCg0KZGYgPC0gc3RhcndhcnMNCmBgYA0KDQpOb3RhIHBhcmEgbWltIG1lc21hOiBhZGljaW9uZSB1bSBub3ZvIHJldMOibmd1bG8gKGNodW5rKSBjb20gKkN0cmwrQWx0K0kqLg0KDQpDb21lw6dvIGNvbSB1bSBncsOhZmljbyBzY2F0dGVycGxvdCwgaWRhZGUgWCBtYXNzYS4gTyBtYXJjbyBkYSBpZGFkZSDDqSBhIGJhdGFsaGEgZGUgWWF2aW4gKEFRVUVMQSBkYSBtb3J0ZSBkYSBlc3RyZWxhIGRhIG1vcnRlKS4NCg0KYGBge3J9DQpnX2FnZV9tYXNzIDwtIGdncGxvdChkZiwgYWVzKHg9YmlydGhfeWVhciwgeT1tYXNzLCBsYWJlbD1uYW1lKSkgKw0KICBnZW9tX3BvaW50KHNpemU9MC41KSArDQogI2dlb21fdGV4dChhZXMobGFiZWw9aWZlbHNlKGJpcnRoX3llYXI+PTIwMCxhcy5jaGFyYWN0ZXIobmFtZSksJycpKSxoanVzdD0tMC4wNSx2anVzdD0tMC41KSArDQogIHhsaW0gKDAsMTAwMCkgKyB5bGltICgwLDE1MDApICsNCiAgdGhlbWVfbWluaW1hbCgpDQoNCnBfYWdlX21hc3MgPC0gZ2dwbG90bHkoZ19hZ2VfbWFzcykNCmBgYA0KDQpWYW1vcyB2ZXIgcXVhbnRvcyBwZXJzb25hZ2VucyBwYXJ0aWNpcGFyYW0gZGUgY2FkYSBmaWxtZS4gVmVuZG8gbyBiYW5jbyBhYmFpeG8sIGEgdmFyacOhdmVsIGZpbG1lIGVzdMOhIGFncnVwYWRhIGVtIGxpc3RhcywgZW50w6NvIDHCuiBkZXNmYcOnbyBhcyBsaXN0YXMsIDLCuiB0cmFuc2Zvcm1vIGNhZGEgZmlsbWUgZW0gdW1hIHZhcmnDoXZlbChjb2x1bmEpLCAzwroganVudG8gdHVkbyBlbSB1bWEgdmFyacOhdmVsLCBlIHBvciDDumx0aW1vLCA0wrogY3JpbyB1bSBub3ZvIGJhbmNvIGNvbSBvIHJlc3VsdGFkbyBlIGV4Y2x1aW5kbyBvcyBjYXNvcyBmYWx0YW50ZXMgKE5BKS4NCg0KYGBge3J9DQpkZjIgPC0gZGYNCg0KZGYyIDwtIGRmMiAlPiUNCiAgbXV0YXRlKGZpbG1zID0gbWFwKGZpbG1zLCB0b1N0cmluZykpICU+JSAjdW5saXN0IHZhcmlhYmxlDQogIHNlcGFyYXRlKGZpbG1zLCBzZXAgPSAiLCIsDQogICAgICAgICAgIGludG8gPSBjKCJmaWxtIiwgImZpbG0xIiwgImZpbG0yIiwgImZpbG0zIiwgImZpbG00IiwgImZpbG01IiwgImZpbG02IiksDQogICAgICAgICAgIGNvbnZlcnQgPSBUUlVFKSAjc2VwYXJhdGUgbGlzdHMgaW50byBjb2x1bW5zDQoNCmRmMiA8LSBnYXRoZXIoZGYyLCJjb2x1bW5zIiwiZmlsbXMiLCAxMjoxOCkNCmRmMiRjb2x1bW5zIDwtIE5VTEwNCg0KY2hhcl9maWxtcyA8LSBkZjIgJT4lIGdyb3VwX2J5KGZpbG1zLCBuYW1lKSAlPiUgIHN1bW1hcmlzZShuID0gbigpKSAlPiUgc3VtbWFyaXNlKG4gPSBzdW0obikpDQpjaGFyX2ZpbG1zIDwtIGNoYXJfZmlsbXNbLTE0LF0NCmBgYA0KDQpBZ29yYSBzaW0sIGFvIGdyw6FmaWNvOg0KDQpgYGB7cn0NCmNoYXJfZmlsbXMgPC0gZGYyICU+JSBncm91cF9ieShmaWxtcywgbmFtZSkgJT4lICBzdW1tYXJpc2UobiA9IG4oKSkgJT4lIHN1bW1hcmlzZShuID0gc3VtKG4pKQ0KY2hhcl9maWxtcyA8LSBjaGFyX2ZpbG1zWy0xNCxdDQoNCmdncGxvdChjaGFyX2ZpbG1zLCBhZXMocmVvcmRlcihmaWxtcywgbiksIG4pKSArDQogIGdlb21fYmFyKHN0YXQ9J2lkZW50aXR5JywgZmlsbD0iIzVGODE1RSIpICsgY29vcmRfZmxpcCgpICsNCiAgeGxhYignRmlsbWVzJykgKyB5bGFiKCdOw7ptZXJvIGRlIHBlcnNvbmFnZW5zJykgKw0KICB0aGVtZV9taW5pbWFsKCkNCmBgYA0KDQpRdWVyaWEgZmF6ZXIgYWxnbyB0aXBvIHVtYSByZWRlLCBwcmEgY2FkYSBwZXJzb25hZ2VtIG9zIGZpbG1lcyBxdWUgZWxlcyBwYXJ0aWNpcGFyYW0uLi4gIkF3ZXNvbWUgaXQgaXMiLCBkaXJpYSBvIFlvZGEuIEZpY2EgcHJhIG8gcHJveGltbyBjYXDDrXR1bG8uLi4NCg0KQWgsIHByYSB0ZXJtaW5hciBmaXogdW1hIEFuYWxpc2UgZGUgQ29tcG9uZW50ZXMgUHJpbmNpcGFpcywgc8OzIHByYSB0ZXN0YXIsIHBvcnF1ZSBzw7MgdGVtIHRyw6pzIHZhcmlhdmVpcyBudW3DqXJpY2FzIG5lc3NlIGJhbmNvIGUgbyBQQ0EgZnVuY2lvbmEgY29tIG11aXRhcyB2YXJpw6F2ZWlzIG51bWVyaWNhcyBwYXJhIGlkZW50aWZpY2FyIG8gZm9ybWF0byBkb3MgZGFkb3MsIGFzIHNlbWVsaGFuw6dhcyBlIGRpZmVyZW7Dp2FzIGVudHJlIGFzIGFtb3N0cmFzIGUgcmVkdXppciBhcyB2YXJpw6F2ZWlzIGVtICJjb21wb25lbnRlcyBwcmluY2lwYWlzIi4gUXVhbmRvIHRpdmVyIHVtIGJhbmNvIG1lbGhvciwgdm91IGVudGVuZGVyIG1haXMuLi4gZmljb3UgYXNzaW06DQoNCmBgYHtyfQ0KZGYkaGVpZ2h0W2lzLm5hKGRmJGhlaWdodCldIDwtIDANCmRmJG1hc3NbaXMubmEoZGYkbWFzcyldIDwtIDANCmRmJGJpcnRoX3llYXJbaXMubmEoZGYkYmlydGhfeWVhcildIDwtIDANCg0Kc3RhcndhcnMucGNhIDwtIHByY29tcChkZlssYygyOjMsNyldLCBjZW50ZXIgPSBUUlVFLHNjYWxlLiA9IFRSVUUpDQpzdW1tYXJ5KHN0YXJ3YXJzLnBjYSkNCnBjYSA8LSBhdXRvcGxvdChzdGFyd2Fycy5wY2EsIGRhdGEgPSBkZiwgY29sb3VyID0gJ2dlbmRlcicsDQogICAgICAgICBsb2FkaW5ncyA9IFRSVUUsIGxvYWRpbmdzLmNvbG91ciA9ICdibGFjaycsDQogICAgICAgICBsb2FkaW5ncy5sYWJlbCA9IFRSVUUsIGxvYWRpbmdzLmxhYmVsLnNpemUgPSA0KQ0KYGBgDQoNCn5SZWZlcsOqbmNpYXN+DQoNCi0gVHV0b3JpYWwgUENBIChodHRwczovL3d3dy5kYXRhY2FtcC5jb20vY29tbXVuaXR5L3R1dG9yaWFscy9wY2EtYW5hbHlzaXMtcikNCi0gTXVpdG8gZ29vZ2xlIGUgU3RhY2tvdmVyZmxvdyA6KQ0KLSBDb25lY3RhbmRvIEdpdCBlIFJTdHVkaW8gKGh0dHBzOi8vYmVhdHJpem1pbHouZ2l0aHViLmlvL1JMYWRpZXMtR2l0LVJTdHVkaW8tMjAxOS8jMzgpDQoNCiphZGlvcyouIGJ5OiBnZW9SZ2lh</div>
 
 
 

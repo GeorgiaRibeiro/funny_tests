@@ -76,7 +76,8 @@ pca <- autoplot(starwars.pca, data = df, colour = 'gender',
 
 ~Referências~
 
-Tutorial PCA (https://www.datacamp.com/community/tutorials/pca-analysis-r)
-Muito google e Stackoverflow :)
+- Tutorial PCA (https://www.datacamp.com/community/tutorials/pca-analysis-r)
+- Muito google e Stackoverflow :)
+- Conectando Git e RStudio (https://beatrizmilz.github.io/RLadies-Git-RStudio-2019/#38)
 
 *adios*. by: geoRgia
