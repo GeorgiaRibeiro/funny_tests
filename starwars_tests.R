@@ -22,6 +22,7 @@ g_age_mass <- ggplot(df, aes(x=birth_year, y=mass, label=name)) +
 p_age_mass <- ggplotly(g_age_mass)
 
 #----- arrange data ----#
+library(tidyr, purrr)
 df2 <- df
 
 df2 <- df2 %>%
@@ -39,7 +40,7 @@ char_films <- char_films[-14,]
 
 ggplot(char_films, aes(reorder(films, n), n)) +
   geom_bar(stat='identity', fill="#5F815E") + coord_flip() +
-  xlab('Filmes') + ylab('Número de personagens') +
+  xlab('Filmes') + ylab('N?mero de personagens') +
   theme_minimal()
 
 # 3. PCA

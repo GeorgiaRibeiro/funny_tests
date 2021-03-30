@@ -1,6 +1,8 @@
 ---
 title: "Exploratory Data w/ Starwars"
-output: html_notebook
+output:
+  html_document:
+    df_print: paged
 ---
 
 Esse é um Notebook [R Markdown](http://rmarkdown.rstudio.com). Quando você executa as linhas de código os resultados aparecem embaixo.
@@ -31,6 +33,7 @@ p_age_mass <- ggplotly(g_age_mass)
 Vamos ver quantos personagens participaram de cada filme. Vendo o banco abaixo, a variável filme está agrupada em listas, então 1º desfaço as listas, 2º transformo cada filme em uma variável(coluna), 3º junto tudo em uma variável, e por último, 4º crio um novo banco com o resultado e excluindo os casos faltantes (NA).
 
 ```{r}
+library(tidyverse)
 df2 <- df
 
 df2 <- df2 %>%
