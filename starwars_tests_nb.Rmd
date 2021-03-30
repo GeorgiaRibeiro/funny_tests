@@ -1,0 +1,82 @@
+---
+title: "Exploratory Data w/ Starwars"
+output: html_notebook
+---
+
+Esse é um Notebook [R Markdown](http://rmarkdown.rstudio.com). Quando você executa as linhas de código os resultados aparecem embaixo.
+
+Tenta executar esse código clicando em *Run*, botão na direta superior ou colocando o mouse dentro do retângulo + *Ctrl+Shift+Enter*. 
+
+```{r}
+library(dplyr, ggplot2)
+library(plotly)
+
+df <- starwars
+```
+
+Nota para mim mesma: adicione um novo retângulo (chunk) com *Ctrl+Alt+I*.
+
+Começo com um gráfico scatterplot, idade X massa. O marco da idade é a batalha de Yavin (AQUELA da morte da estrela da morte).
+
+```{r}
+g_age_mass <- ggplot(df, aes(x=birth_year, y=mass, label=name)) +
+  geom_point(size=0.5) +
+ #geom_text(aes(label=ifelse(birth_year>=200,as.character(name),'')),hjust=-0.05,vjust=-0.5) +
+  xlim (0,1000) + ylim (0,1500) +
+  theme_minimal()
+
+p_age_mass <- ggplotly(g_age_mass)
+```
+
+Vamos ver quantos personagens participaram de cada filme. Vendo o banco abaixo, a variável filme está agrupada em listas, então 1º desfaço as listas, 2º transformo cada filme em uma variável(coluna), 3º junto tudo em uma variável, e por último, 4º crio um novo banco com o resultado e excluindo os casos faltantes (NA).
+
+```{r}
+df2 <- df
+
+df2 <- df2 %>%
+  mutate(films = map(films, toString)) %>% #unlist variable
+  separate(films, sep = ",",
+           into = c("film", "film1", "film2", "film3", "film4", "film5", "film6"),
+           convert = TRUE) #separate lists into columns
+
+df2 <- gather(df2,"columns","films", 12:18)
+df2$columns <- NULL
+
+char_films <- df2 %>% group_by(films, name) %>%  summarise(n = n()) %>% summarise(n = sum(n))
+char_films <- char_films[-14,]
+```
+
+Agora sim, ao gráfico:
+
+```{r}
+char_films <- df2 %>% group_by(films, name) %>%  summarise(n = n()) %>% summarise(n = sum(n))
+char_films <- char_films[-14,]
+
+ggplot(char_films, aes(reorder(films, n), n)) +
+  geom_bar(stat='identity', fill="#5F815E") + coord_flip() +
+  xlab('Filmes') + ylab('Número de personagens') +
+  theme_minimal()
+```
+
+Queria fazer algo tipo uma rede, pra cada personagem os filmes que eles participaram... "Awesome it is", diria o Yoda. Fica pra o proximo capítulo...
+
+Ah, pra terminar fiz uma Analise de Componentes Principais, só pra testar, porque só tem três variaveis numéricas nesse banco e o PCA funciona com muitas variáveis numericas para identificar o formato dos dados, as semelhanças e diferenças entre as amostras e reduzir as variáveis em "componentes principais". Quando tiver um banco melhor, vou entender mais... ficou assim:
+
+```{r}
+df$height[is.na(df$height)] <- 0
+df$mass[is.na(df$mass)] <- 0
+df$birth_year[is.na(df$birth_year)] <- 0
+
+starwars.pca <- prcomp(df[,c(2:3,7)], center = TRUE,scale. = TRUE)
+summary(starwars.pca)
+pca <- autoplot(starwars.pca, data = df, colour = 'gender',
+         loadings = TRUE, loadings.colour = 'black',
+         loadings.label = TRUE, loadings.label.size = 4)
+```
+
+~Referências~
+
+Tutorial PCA (https://www.datacamp.com/community/tutorials/pca-analysis-r)
+Muito google e Stackoverflow :)
+
+*adios*. by: geoRgia
